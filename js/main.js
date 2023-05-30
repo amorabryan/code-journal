@@ -34,7 +34,7 @@ $codeJournal.addEventListener('submit', function (event) {
   journalData[notes] = notesValue;
 
   const entriesArray = data.entries;
-  entriesArray.push(journalData);
+  entriesArray.unshift(journalData);
 
   $url.src = 'images/placeholder-image-square.jpg';
 
