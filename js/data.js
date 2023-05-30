@@ -8,7 +8,6 @@ var data = {
 };
 
 window.addEventListener('beforeunload', function (event) {
-  event.preventDefault();
   const journalEntriesJSON = JSON.stringify(data.entries);
   localStorage.setItem('javascript-local-storage', journalEntriesJSON);
 });
