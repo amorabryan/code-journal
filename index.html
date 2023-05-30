@@ -14,14 +14,62 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Proza+Libre&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
     <div class="container">
+      <div class="row">
+        <div class="column-full">
+          <h3>Code Journal</h3>
+        </div>
+      </div>
     </div>
   </header>
   <main class="container">
-    <div data-view="entry-form"></div>
+    <div data-view="entry-form">
+      <form id="codeJournal">
+        <div class="row">
+          <div class="column-full">
+            <h1>New Entry</h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column-full column-half">
+            <div class="img">
+              <img src="images/placeholder-image-square.jpg" class="url" alt="placeholder-image">
+            </div>
+          </div>
+          <div class="column-full column-half">
+            <div class="column-full">
+              <label for="title">Title</label>
+            </div>
+            <div class="column-full">
+              <input type="text" id="title" name="userTitle" required>
+            </div>
+            <div class="column-full">
+              <label for="photoURL">Photo URL</label>
+            </div>
+            <div class="column-full">
+              <input type="text" id="photoURL" name="userPhoto" required>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="column-full">
+            <label for="notes">Notes</label>
+          </div>
+          <div class="column-full">
+            <textarea id="notes" name="userNotes" cols="30" rows="15" required></textarea>
+          </div>
+          <div class="column-full">
+            <button type="submit" value="save" id="save">SAVE</button>
+          </div>
+        </div>
+      </form>
+    </div>
     <div data-view="entries" class="hidden"></div>
   </main>
   <script src="js/data.js"></script>
