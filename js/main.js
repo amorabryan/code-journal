@@ -98,4 +98,5 @@ document.addEventListener('DOMContentLoaded', function () {
     const $newEntry = renderEntry(data.entries[i]);
     $journalList.appendChild($newEntry);
   }
-});
+}
+);

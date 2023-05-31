@@ -66,3 +66,7 @@ p {
 li.row {
   align-items: center;
 }
+
+.no-entries {
+  text-align: center;
+}
