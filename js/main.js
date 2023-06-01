@@ -42,7 +42,7 @@ $codeJournal.addEventListener('submit', function (event) {
 
   viewSwap('entries');
 
-  if (data.entries === []) {
+  if (data.entries.length >= 1) {
     toggleNoEntries();
   }
 
@@ -103,12 +103,13 @@ const $journalList = document.querySelector('.journal-list');
 
 document.addEventListener('DOMContentLoaded', function () {
   const lastView = data.view;
+  const dataEntries = data.entries;
   if (lastView) {
     viewSwap(lastView);
   } for (let i = 0; i < data.entries.length; i++) {
     const $newEntry = renderEntry(data.entries[i]);
     $journalList.appendChild($newEntry);
-  } if (data.entries === []) {
+  } if (dataEntries.length >= 1) {
     toggleNoEntries();
   }
 }
@@ -117,10 +118,10 @@ document.addEventListener('DOMContentLoaded', function () {
 const $noEntries = document.querySelector('.no-entries');
 
 function toggleNoEntries() {
-  if (data.entries === []) {
-    $noEntries.className = 'no-entries';
-  } else {
+  if (data.entries.length >= 1) {
     $noEntries.className = 'no-entries' + ' ' + 'hidden';
+  } else {
+    $noEntries.className = 'no-entries';
   }
 }
 
