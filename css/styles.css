@@ -54,12 +54,17 @@ textarea {
   border-radius: 5px;
 }
 
+#code-journal > .row:last-child > .column-full:last-child {
+  text-align: right;
+}
+
 button {
   background-color: rgb(86, 43, 129);
   color: white;
   padding: 0.6rem 1.1rem;
   border-radius: 5px;
   border: 0;
+  text-align: right;
 }
 
 input:focus,

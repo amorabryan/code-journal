@@ -9,7 +9,7 @@ $photoURL.addEventListener('input', function (event) {
   }
 });
 
-const $codeJournal = document.querySelector('#codeJournal');
+const $codeJournal = document.querySelector('#code-journal');
 const journalElements = $codeJournal.elements;
 
 $codeJournal.addEventListener('submit', function (event) {
@@ -104,9 +104,8 @@ const $journalList = document.querySelector('.journal-list');
 document.addEventListener('DOMContentLoaded', function () {
   const lastView = data.view;
   const dataEntries = data.entries;
-  if (lastView) {
-    viewSwap(lastView);
-  } for (let i = 0; i < data.entries.length; i++) {
+  viewSwap(lastView);
+  for (let i = 0; i < data.entries.length; i++) {
     const $newEntry = renderEntry(data.entries[i]);
     $journalList.appendChild($newEntry);
   } if (dataEntries.length >= 1) {
