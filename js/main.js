@@ -67,6 +67,7 @@ $codeJournal.addEventListener('submit', function (event) {
 function renderEntry(entry) {
   const $firstEntry = document.createElement('li');
   $firstEntry.setAttribute('class', 'row');
+  $firstEntry.setAttribute('data-entry-id', entry.entryId);
 
   const $firstDiv = document.createElement('div');
   $firstDiv.setAttribute('class', 'column-full column-half');
@@ -88,7 +89,15 @@ function renderEntry(entry) {
 
   const $h2 = document.createElement('h2');
   $h2.setAttribute('class', 'title');
-  $h2.textContent = entry.userTitle;
+
+  const $titleText = document.createElement('span');
+  $titleText.textContent = entry.userTitle;
+  $h2.appendChild($titleText);
+
+  const $pencilIcon = document.createElement('i');
+  $pencilIcon.setAttribute('class', 'fa-solid fa-pencil');
+  $h2.appendChild($pencilIcon);
+
   $secondCol.appendChild($h2);
 
   const $p = document.createElement('p');
