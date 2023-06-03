@@ -155,3 +155,24 @@ const $formLaunch = document.querySelector('.form-launch');
 $formLaunch.addEventListener('click', function (event) {
   viewSwap('entry-form');
 });
+
+const $ul = document.querySelector('ul');
+
+$ul.addEventListener('click', function (event) {
+  const $li = event.target.closest('li');
+  viewSwap('entry-form');
+  const numEntry = $li.getAttribute('data-entry-id');
+  let clickedEntry = 0;
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === Number(numEntry)) {
+      clickedEntry = data.entries[i];
+    }
+  }
+  data.editing = clickedEntry;
+
+  $codeJournal.querySelector('#title').value = clickedEntry.userTitle;
+  $codeJournal.querySelector('#photoURL').value = clickedEntry.userPhoto;
+  $codeJournal.querySelector('#notes').value = clickedEntry.userNotes;
+
+  document.querySelector('#title-entry').textContent = 'Edit Entry';
+});
