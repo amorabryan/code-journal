@@ -95,3 +95,15 @@ li.row {
 .no-entries {
   text-align: center;
 }
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fa-solid,
+.fa-pencil {
+  color: rgb(86, 43, 129);
+  cursor: pointer;
+}

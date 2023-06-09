@@ -1,5 +1,6 @@
 const $photoURL = document.querySelector('#photoURL');
 const $url = document.querySelector('.url');
+const $journalList = document.querySelector('.journal-list');
 
 $photoURL.addEventListener('input', function (event) {
   if (event.target.value === '') {
@@ -11,10 +12,10 @@ $photoURL.addEventListener('input', function (event) {
 
 const $codeJournal = document.querySelector('#code-journal');
 const journalElements = $codeJournal.elements;
+const entriesArray = data.entries;
 
 $codeJournal.addEventListener('submit', function (event) {
   event.preventDefault();
-
   const journalData = {};
 
   const title = journalElements.title.name;
@@ -25,24 +26,40 @@ $codeJournal.addEventListener('submit', function (event) {
   const photoURLValue = journalElements.photoURL.value;
   const notesValue = journalElements.notes.value;
 
-  journalData.entryId = data.nextEntryId;
+  if (data.editing === null) {
+    journalData.entryId = data.nextEntryId;
+    data.nextEntryId++;
 
-  data.nextEntryId++;
+    journalData[title] = titleValue;
+    journalData[photoURL] = photoURLValue;
+    journalData[notes] = notesValue;
 
-  journalData[title] = titleValue;
-  journalData[photoURL] = photoURLValue;
-  journalData[notes] = notesValue;
+    entriesArray.unshift(journalData);
 
-  const entriesArray = data.entries;
-  entriesArray.unshift(journalData);
+    $journalList.prepend(renderEntry(journalData));
+  } else {
+    journalData.entryId = data.editing.entryId;
+
+    journalData[title] = titleValue;
+    journalData[photoURL] = photoURLValue;
+    journalData[notes] = notesValue;
+
+    const $li = document.querySelector(`li[data-entry-id="${data.editing.entryId}"]`);
+    $li.replaceWith(renderEntry(journalData));
+
+    for (let i = 0; i < entriesArray.length; i++) {
+      if (entriesArray[i].entryId === data.editing.entryId) {
+        entriesArray.splice(i, 1, journalData);
+      }
+    }
+    data.editing = null;
+  }
 
   $url.src = 'images/placeholder-image-square.jpg';
 
-  $journalList.prepend(renderEntry(journalData));
-
   viewSwap('entries');
 
-  if (data.entries.length >= 1) {
+  if (entriesArray.length >= 1) {
     toggleNoEntries();
   }
 
@@ -66,49 +83,55 @@ $codeJournal.addEventListener('submit', function (event) {
 
 function renderEntry(entry) {
   const $firstEntry = document.createElement('li');
-  $firstEntry.setAttribute('class', 'row');
+  $firstEntry.className = 'row';
+  $firstEntry.setAttribute('data-entry-id', entry.entryId);
 
   const $firstDiv = document.createElement('div');
-  $firstDiv.setAttribute('class', 'column-full column-half');
+  $firstDiv.className = 'column-full column-half';
   $firstEntry.appendChild($firstDiv);
 
   const $divImg = document.createElement('div');
-  $divImg.setAttribute('class', 'img');
+  $divImg.className = 'img';
   $firstDiv.appendChild($divImg);
 
   const $secondCol = document.createElement('div');
-  $secondCol.setAttribute('class', 'column-full column-half');
+  $secondCol.className = 'column-full column-half';
   $firstEntry.appendChild($secondCol);
 
   const $img = document.createElement('img');
   $img.setAttribute('src', entry.userPhoto);
   $img.setAttribute('alt', entry.userTitle);
-  $img.setAttribute('class', 'photo');
+  $img.className = 'photo';
   $divImg.appendChild($img);
 
   const $h2 = document.createElement('h2');
-  $h2.setAttribute('class', 'title');
-  $h2.textContent = entry.userTitle;
+  $h2.className = 'title';
+
+  const $titleText = document.createElement('span');
+  $titleText.textContent = entry.userTitle;
+  $h2.appendChild($titleText);
+
+  const $pencilIcon = document.createElement('i');
+  $pencilIcon.className = 'fa-solid fa-pencil';
+  $h2.appendChild($pencilIcon);
+
   $secondCol.appendChild($h2);
 
   const $p = document.createElement('p');
-  $p.setAttribute('class', 'notes');
+  $p.className = 'notes';
   $p.textContent = entry.userNotes;
   $secondCol.append($p);
 
   return $firstEntry;
 }
 
-const $journalList = document.querySelector('.journal-list');
-
 document.addEventListener('DOMContentLoaded', function () {
   const lastView = data.view;
-  const dataEntries = data.entries;
   viewSwap(lastView);
-  for (let i = 0; i < data.entries.length; i++) {
-    const $newEntry = renderEntry(data.entries[i]);
+  for (let i = 0; i < entriesArray.length; i++) {
+    const $newEntry = renderEntry(entriesArray[i]);
     $journalList.appendChild($newEntry);
-  } if (dataEntries.length >= 1) {
+  } if (entriesArray.length >= 1) {
     toggleNoEntries();
   }
 }
@@ -117,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
 const $noEntries = document.querySelector('.no-entries');
 
 function toggleNoEntries() {
-  if (data.entries.length >= 1) {
+  if (entriesArray.length >= 1) {
     $noEntries.className = 'no-entries' + ' ' + 'hidden';
   } else {
     $noEntries.className = 'no-entries';
@@ -145,4 +168,32 @@ $entryLaunch.addEventListener('click', function (event) {
 const $formLaunch = document.querySelector('.form-launch');
 $formLaunch.addEventListener('click', function (event) {
   viewSwap('entry-form');
+});
+
+const $ul = document.querySelector('ul');
+
+const $title = $codeJournal.querySelector('#title');
+const $notes = $codeJournal.querySelector('#notes');
+const $titleEntry = document.querySelector('#title-entry');
+
+$ul.addEventListener('click', function (event) {
+  const $li = event.target.closest('li');
+  if (event.target.tagName === 'I') {
+    viewSwap('entry-form');
+    const numEntry = $li.getAttribute('data-entry-id');
+    let clickedEntry = 0;
+    for (let i = 0; i < entriesArray.length; i++) {
+      if (entriesArray[i].entryId === Number(numEntry)) {
+        clickedEntry = entriesArray[i];
+      }
+    }
+    data.editing = clickedEntry;
+
+    $title.value = clickedEntry.userTitle;
+    $photoURL.value = clickedEntry.userPhoto;
+    $notes.value = clickedEntry.userNotes;
+    $url.src = clickedEntry.userPhoto;
+
+    $titleEntry.textContent = 'Edit Entry';
+  }
 });
