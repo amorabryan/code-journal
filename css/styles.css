@@ -105,4 +105,5 @@ li.row {
 .fa-solid,
 .fa-pencil {
   color: rgb(86, 43, 129);
+  cursor: pointer;
 }
