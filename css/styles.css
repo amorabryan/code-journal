@@ -109,13 +109,20 @@ textarea:focus {
   border-radius: 5px;
 }
 
-button.delete:hover,
-button#save:hover {
+button:hover {
   cursor: pointer;
 }
 
 button#save:hover {
   box-shadow: 0 0 3px 0.5px rgb(126, 43, 129);
+}
+
+button.cancel-delete:hover {
+  box-shadow: 0 0 3px 0.5px rgb(126, 129, 131);
+}
+
+button.confirm-delete:hover {
+  box-shadow: 0 0 3px 0.5px rgb(150, 14, 14);
 }
 
 ul {

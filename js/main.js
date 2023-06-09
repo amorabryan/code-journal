@@ -57,11 +57,11 @@ $codeJournal.addEventListener('submit', function (event) {
 
   $url.src = 'images/placeholder-image-square.jpg';
 
-  viewSwap('entries');
-
   if (entriesArray.length >= 1) {
     toggleNoEntries();
   }
+
+  viewSwap('entries');
 
   $codeJournal.reset();
 });
@@ -131,11 +131,8 @@ document.addEventListener('DOMContentLoaded', function () {
   for (let i = 0; i < entriesArray.length; i++) {
     const $newEntry = renderEntry(entriesArray[i]);
     $journalList.appendChild($newEntry);
-  } if (entriesArray.length >= 1) {
-    toggleNoEntries();
   }
-}
-);
+});
 
 const $noEntries = document.querySelector('.no-entries');
 
@@ -158,6 +155,7 @@ function viewSwap(viewSwitch) {
       $view[i].classList.add('hidden');
     }
   } $deleteBtn.classList.add('hidden');
+  toggleNoEntries();
 }
 
 const $entryLaunch = document.querySelector('.entry-launch');
@@ -203,6 +201,7 @@ $ul.addEventListener('click', function (event) {
 const $delete = document.querySelector('.delete-button');
 const $deleteModal = document.querySelector('.delete-modal');
 const $cancelDelete = document.querySelector('.cancel-delete');
+const $confirmDelete = document.querySelector('.confirm-delete');
 
 $delete.addEventListener('click', function () {
   $deleteModal.className = 'delete-modal' + '-on';
@@ -211,3 +210,25 @@ $delete.addEventListener('click', function () {
 $cancelDelete.addEventListener('click', function () {
   $deleteModal.className = 'delete-modal';
 });
+
+$confirmDelete.addEventListener('click', function (event) {
+  if (data.editing) {
+    deleteEntry();
+  } $codeJournal.reset();
+  $deleteModal.className = 'delete-modal';
+  viewSwap('entries');
+});
+
+function deleteEntry() {
+  const entryIdToDelete = data.editing.entryId;
+  const $entryToDelete = document.querySelector(`li[data-entry-id="${entryIdToDelete}"]`);
+  $entryToDelete.remove();
+  for (let i = 0; i < entriesArray.length; i++) {
+    if (entriesArray[i].entryId === entryIdToDelete) {
+      entriesArray.splice(i, 1);
+    }
+  } toggleNoEntries();
+  data.editing = null;
+  $url.src = 'images/placeholder-image-square.jpg';
+  $titleEntry.textContent = 'New Entry';
+}
