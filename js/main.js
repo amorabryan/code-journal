@@ -1,5 +1,6 @@
 const $photoURL = document.querySelector('#photoURL');
 const $url = document.querySelector('.url');
+const $journalList = document.querySelector('.journal-list');
 
 $photoURL.addEventListener('input', function (event) {
   if (event.target.value === '') {
@@ -124,8 +125,6 @@ function renderEntry(entry) {
   return $firstEntry;
 }
 
-const $journalList = document.querySelector('.journal-list');
-
 document.addEventListener('DOMContentLoaded', function () {
   const lastView = data.view;
   viewSwap(lastView);
@@ -173,6 +172,10 @@ $formLaunch.addEventListener('click', function (event) {
 
 const $ul = document.querySelector('ul');
 
+const $title = $codeJournal.querySelector('#title');
+const $notes = $codeJournal.querySelector('#notes');
+const $titleEntry = document.querySelector('#title-entry');
+
 $ul.addEventListener('click', function (event) {
   const $li = event.target.closest('li');
   if (event.target.tagName === 'I') {
@@ -186,11 +189,11 @@ $ul.addEventListener('click', function (event) {
     }
     data.editing = clickedEntry;
 
-    $codeJournal.querySelector('#title').value = clickedEntry.userTitle;
-    $codeJournal.querySelector('#photoURL').value = clickedEntry.userPhoto;
-    $codeJournal.querySelector('#notes').value = clickedEntry.userNotes;
+    $title.value = clickedEntry.userTitle;
+    $photoURL.value = clickedEntry.userPhoto;
+    $notes.value = clickedEntry.userNotes;
     $url.src = clickedEntry.userPhoto;
 
-    document.querySelector('#title-entry').textContent = 'Edit Entry';
+    $titleEntry.textContent = 'Edit Entry';
   }
 });
