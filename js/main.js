@@ -157,7 +157,7 @@ function viewSwap(viewSwitch) {
     } else {
       $view[i].classList.add('hidden');
     }
-  }
+  } $deleteBtn.classList.add('hidden');
 }
 
 const $entryLaunch = document.querySelector('.entry-launch');
@@ -175,6 +175,7 @@ const $ul = document.querySelector('ul');
 const $title = $codeJournal.querySelector('#title');
 const $notes = $codeJournal.querySelector('#notes');
 const $titleEntry = document.querySelector('#title-entry');
+const $deleteBtn = document.querySelector('.delete');
 
 $ul.addEventListener('click', function (event) {
   const $li = event.target.closest('li');
@@ -187,6 +188,7 @@ $ul.addEventListener('click', function (event) {
         clickedEntry = entriesArray[i];
       }
     }
+    $deleteBtn.classList.remove('hidden');
     data.editing = clickedEntry;
 
     $title.value = clickedEntry.userTitle;
@@ -196,4 +198,16 @@ $ul.addEventListener('click', function (event) {
 
     $titleEntry.textContent = 'Edit Entry';
   }
+});
+
+const $delete = document.querySelector('.delete-button');
+const $deleteModal = document.querySelector('.delete-modal');
+const $cancelDelete = document.querySelector('.cancel-delete');
+
+$delete.addEventListener('click', function () {
+  $deleteModal.className = 'delete-modal' + '-on';
+});
+
+$cancelDelete.addEventListener('click', function () {
+  $deleteModal.className = 'delete-modal';
 });
