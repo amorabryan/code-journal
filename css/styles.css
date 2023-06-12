@@ -58,13 +58,49 @@ textarea {
   text-align: right;
 }
 
-button {
-  background-color: rgb(86, 43, 129);
-  color: white;
+.delete-button,
+.save-button {
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.delete-button {
+  justify-content: flex-start;
+}
+
+.save-button {
+  justify-content: flex-end;
+}
+
+button.delete {
+  color: rgb(204, 18, 18);
+  border: none;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+button#save,
+button.cancel-delete,
+button.confirm-delete {
+  font-weight: bold;
   padding: 0.6rem 1.1rem;
   border-radius: 5px;
   border: 0;
-  text-align: right;
+}
+
+button#save {
+  background-color: rgb(86, 43, 129);
+  color: white;
+}
+
+button.cancel-delete {
+  background-color: rgb(208, 212, 214);
+}
+
+button.confirm-delete {
+  background-color: rgb(253, 66, 65);
+  color: white;
 }
 
 input:focus,
@@ -74,14 +110,25 @@ textarea:focus {
 }
 
 button:hover {
-  box-shadow: 0 0 3px 0.5px rgb(126, 43, 129);
   cursor: pointer;
+}
+
+button#save:hover {
+  box-shadow: 0 0 3px 0.5px rgb(126, 43, 129);
+}
+
+button.cancel-delete:hover {
+  box-shadow: 0 0 3px 0.5px rgb(126, 129, 131);
+}
+
+button.confirm-delete:hover {
+  box-shadow: 0 0 3px 0.5px rgb(150, 14, 14);
 }
 
 ul {
   list-style-type: none;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0;
 }
 
 p {
@@ -106,4 +153,51 @@ li.row {
 .fa-pencil {
   color: rgb(86, 43, 129);
   cursor: pointer;
+}
+
+.delete-modal,
+.delete-modal-on {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(32, 32, 32, 0.7);
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-modal {
+  display: none;
+}
+
+.delete-modal-on {
+  display: flex;
+}
+
+.modal-content {
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  margin: 15rem auto;
+  border-radius: 5px;
+  padding: 55px 5px;
+  border: 1px solid rgb(136, 136, 136);
+  width: 450px;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-column {
+  display: flex;
+  margin: 0.5rem auto;
+  justify-content: space-around;
+}
+
+h2.modal-delete-text {
+  font-size: larger;
+  text-align: center;
 }

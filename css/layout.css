@@ -20,17 +20,23 @@
   padding-top: 5px;
 }
 
+.column-quarter {
+  width: 50%;
+}
+
 @media screen and (min-width: 768px) {
   .container {
     max-width: 900px;
   }
 
   .column-full,
-  .column-half {
+  .column-half,
+  .column-quarter {
     padding: 0 0.75rem;
   }
 
-  .column-half {
+  .column-half,
+  .column-quarter {
     width: 50%;
   }
 }
